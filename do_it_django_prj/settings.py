@@ -140,21 +140,26 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "none"
 LOGIN_REDIRECT_URL = "/blog/"
 
-SOCIALACCOUNT_PROVIDERS = {
-    "google": {
-        "APP": {
-            "client_id": os.getenv("GOOGLE_CLIENT_ID"),
-            "secret": os.getenv("GOOGLE_SECRET_KEY"),
-            "key": "",
-        },
-        # These are provider-specific settings that can only be
-        # listed here:
-        "SCOPE": [
-            "profile",
-            "email",
-        ],
-        "AUTH_PARAMS": {
-            "access_type": "online",
-        },
+import sys
+
+if "test" in sys.argv:
+    SOCIALACCOUNT_PROVIDERS = {
+        "google": {
+            "APP": {
+                "client_id": os.getenv("GOOGLE_CLIENT_ID"),
+                "secret": os.getenv("GOOGLE_SECRET_KEY"),
+                "key": "",
+            },
+            # These are provider-specific settings that can only be
+            # listed here:
+            "SCOPE": [
+                "profile",
+                "email",
+            ],
+            "AUTH_PARAMS": {
+                "access_type": "online",
+            },
+        }
     }
-}
+else:
+    SOCIALACCOUNT_PROVIDERS = {}
